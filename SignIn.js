@@ -1,8 +1,28 @@
 // This function enters a new user
-function SignIn() {
-  var firstName = prompt("Please enter your First Name:");
-  var lastName = prompt("Please enter your Last Name:");
-  
-  // Do something with the first and last name variables, for example:
-  console.log("Welcome, " + firstName + " " + lastName + "!");
+    // Initialize Parse
+    Parse.initialize("igELTw11IIaqOtQbvit9ZLlyKLITaEiFqcTDBfjA", "Hc1C2MNHzqQC45LOQMuE7OqQbotcB7zpr0dIMVgS"); //PASTE HERE YOUR Back4App APPLICATION ID AND YOUR JavaScript KEY
+    Parse.serverURL = "https://parseapi.back4app.com/";
+
+    // Create a new User
+    async function createParseUser() {
+      // Creates a new Parse "User" object, which is created by default in your Parse app
+      let user = new Parse.User();
+      // Set the input values to the new "User" object
+      user.set("username", document.getElementById("username").value);
+      user.set("email", document.getElementById("email").value);
+      user.set("password", document.getElementById("password").value);
+      try {
+        // Call the save method, which returns the saved object if successful
+        user = await user.save();
+        if (user !== null) {
+          // Notify the success by getting the attributes from the "User" object, by using the get method (the id attribute needs to be accessed directly, though)
+          alert(
+            `New object created with success! ObjectId: ${
+              user.id
+            }, ${user.get("username")}`
+          );
+        }
+      } catch (error) {
+        alert(`Error: ${error.message}`);
+      }
 }
